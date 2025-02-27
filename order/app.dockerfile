@@ -4,13 +4,15 @@ FROM golang:1.23.2-alpine AS build
 # Install dependencies for building Go applications
 RUN apk --no-cache add gcc g++ make ca-certificates
 
-RUN apt-get update && apt-get install -y git
+RUN apk update && apk add git
 
 # Set the working directory for your project
 WORKDIR /go/src/github.com/EricsAntony/go-grpc-graphql-microservices
 
 # Copy Go module files and vendor directory
 COPY go.mod go.sum ./
+COPY account account
+COPY catalog catalog
 COPY order order
 
 # Build the Go application with vendor mode enabled

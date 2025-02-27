@@ -20,14 +20,14 @@ func main() {
 
 	err := envconfig.Process("", &cfg)
 	if err != nil {
-		log.Fatal("got 1", err)
+		log.Fatal(err)
 	}
 
 	s, err := NewGraphQLServer(cfg.AccountUrl, cfg.CatalogUrl, cfg.OrderUrl)
 	if err != nil {
-		log.Fatal("got 2", err)
+		log.Fatal(err)
 	}
-
+	
 	http.Handle("/graphql", handler.GraphQL(s.ToExecutableSchema()))
 	http.Handle("/playground", playground.Handler("erics", "/graphql"))
 
